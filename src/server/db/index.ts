@@ -3,6 +3,7 @@ import config from '../config'
 import Books from './queries/books'
 import Users from './queries/users'
 import Tokens from './queries/tokens'
+import Categories from './queries/categories'
 
 
 export const pool = mysql.createPool(config.mysql)
@@ -22,5 +23,6 @@ export const Query = (query: string, values?: any) => {
 export default{
     Books,
     Users,
-    Tokens
+    Tokens,
+    Categories
 }

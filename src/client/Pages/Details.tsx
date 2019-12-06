@@ -19,7 +19,6 @@ class Details extends React.Component<IDetailsProps, IDetailsState> {
         }
     }
 
-
     async componentWillMount() {
         try {
             let book = await json(`/api/books/${this.props.match.params.id}`);

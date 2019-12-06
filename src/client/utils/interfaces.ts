@@ -7,3 +7,8 @@ export interface IBooks {
     _created: Date,
     name: string
 }
+
+export interface ICategories{
+    id:number,
+    name: string
+}
