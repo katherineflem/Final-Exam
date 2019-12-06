@@ -1,19 +1,21 @@
 import * as React from 'react';
+import { IBooks } from '../utils/interfaces';
+import {json}from '../utils/api'
+import { Link } from 'react-router-dom';
 
 class Listing extends React.Component<IListingProps, IListingState> {
 
     constructor(props: IListingProps) {
         super(props);
         this.state = {
-            name: null
+            books:[]
         };
     }
 
     async componentWillMount() {
         try {
-            let r = await fetch('/api/hello');
-            let name = await r.json();
-            this.setState({ name });
+            let books = await json('/api/books');
+            this.setState({ books });
         } catch (error) {
             console.log(error);
         }
@@ -22,7 +24,25 @@ class Listing extends React.Component<IListingProps, IListingState> {
     render() {
         return (
             <main className="container my-5">
-                <h1 className="text-primary text-center">Hello {this.state.name}!</h1>
+                <div className="row">
+                    <div className="col">
+                        {this.state.books.map(book=>{
+                            return(
+                                <div className="card m-2 shadow" key={book.id}>
+                                    <div className="card-header text-center">
+                                        <h3>{book.title}</h3>
+                                    </div>
+                                    <div className="card-body text-center">
+                                        <p>Author: {book.author}</p>
+                                        <p>Price: ${book.price}</p>
+                                        <span className='badge'>Category:{book.name}</span>
+                                    </div>
+                                    <Link className='text-center'to ={`/details/${book.id}`}>More Details...</Link>
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
             </main>
         )
     }
@@ -31,7 +51,7 @@ class Listing extends React.Component<IListingProps, IListingState> {
 export interface IListingProps { }
 
 export interface IListingState {
-    name: string;
+    books: IBooks[];
 }
 
 export default Listing;
