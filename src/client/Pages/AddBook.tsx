@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { json, User } from '../utils/api';
 import { RouteComponentProps } from 'react-router';
-// import { ICategories } from '../utils/interfaces';
 
 class AddBook extends React.Component<AddBookProps, AddBookState>{
     constructor(props: AddBookProps) {
@@ -11,8 +10,7 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
             author: '',
             price: '',
             categoryid: ''
-            // selectedCategory: '',
-            // categories: []
+           
         }
         this.handleSubmit = this.handleSubmit.bind(this)
 
@@ -25,7 +23,6 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
             author: this.state.author,
             price: this.state.price,
             categoryid: this.state.categoryid
-            // selectedCategory: this.state.selectedCategory
         }
 
         if (!User || User.userid === null || User.role !== 'admin') {
@@ -35,7 +32,6 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
 
             try {
                 let newBook = await json('/api/books', 'POST', Details)
-                // let categories= await json('/api/categories')
                 this.setState(newBook)
             } catch (e) {
                 console.log(e)
@@ -50,8 +46,6 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
             author: this.state.author,
             price: this.state.price,
             categoryid: this.state.categoryid
-            // selectedCategory: this.state.selectedCategory
-
         }
         try {
             let newBook = await json(`/api/books/`, 'POST', Details)
@@ -90,17 +84,6 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
                                 value={this.state.categoryid}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { this.setState({ categoryid: e.target.value }) }}
                                 type="text" className="form-control" />
-                            {/* <select
-                                className='form-control'
-                                value={this.state.selectedCategory}
-                                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => { this.setState({ selectedCategory: e.target.value }) }}>
-                                <option>Choose Tag</option>
-                                {this.state.categories.map(category=> {
-                                    return (
-                                        <option key={category.id} value={category.id}>{category.name}</option>
-                                    )
-                                })}
-                            </select> */}
 
                         </form>
                         <button
@@ -119,9 +102,7 @@ interface AddBookState {
     author: string,
     price: string,
     categoryid: string
-    // selectedCategory: string
 
-    // categories: ICategories[]
 }
 
 interface AddBookProps extends RouteComponentProps<{ id: string }> { }
