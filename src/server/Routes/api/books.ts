@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', isAdmin,async (req, res) => {
+router.post('/', isAdmin, async (req, res) => {
     try {
         let title = req.body.title
         let author = req.body.author
