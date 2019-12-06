@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { json } from '../utils/api';
+import { json, User } from '../utils/api';
 import { RouteComponentProps } from 'react-router';
 
 class AddBook extends React.Component<AddBookProps, AddBookState>{
@@ -15,6 +15,27 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
 
     }
 
+    async componentDidMount() {
+        let Details = {
+            title: this.state.title,
+            author: this.state.author,
+            price: this.state.price,
+            categoryid: this.state.categoryid
+        }
+
+        if (!User || User.userid === null || User.role !== 'admin') {
+            alert('you must login or register to post')
+            this.props.history.replace('/login')
+        } else {
+
+            try {
+                let newBook = await json('/api/books', 'POST', Details)
+                this.setState(newBook)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }
 
     async handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault()
@@ -23,9 +44,10 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
             author: this.state.author,
             price: this.state.price,
             categoryid: this.state.categoryid
+
         }
         try {
-            let newBook= await json(`/api/books/`, 'POST', Details)
+            let newBook = await json(`/api/books/`, 'POST', Details)
             this.setState(newBook)
             this.props.history.push('/')
         } catch (e) {
@@ -39,6 +61,7 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
             <div>
                 <div className="row justify-content-center">
                     <div className="col-md-6">
+                        <h3 className='text-center'>Add New Book Page</h3>
                         <form className="form-group">
                             <label>Title:</label>
                             <input
@@ -65,7 +88,7 @@ class AddBook extends React.Component<AddBookProps, AddBookState>{
                         <button
                             onClick={this.handleSubmit}
                         >Submit Changes</button>
-                      
+
                     </div>
                 </div>
             </div>

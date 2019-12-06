@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { json, SetAccessToken } from '../utils/api';
 import { RouteComponentProps } from 'react-router';
+import { Link } from 'react-router-dom';
 
 class Login extends React.Component<LoginProps, LoginState>{
     constructor(props: LoginProps) {
@@ -13,6 +14,7 @@ class Login extends React.Component<LoginProps, LoginState>{
         this.handleSubmit = this.handleSubmit.bind(this)
 
     }
+
 
 
     async handleSubmit(e: React.MouseEvent<HTMLButtonElement>) {
@@ -33,6 +35,7 @@ class Login extends React.Component<LoginProps, LoginState>{
                     this.props.history.push('/register')
                 }
             }
+            alert('success!')
             this.props.history.push('/')
         } catch (e) {
             console.log(e)
@@ -45,6 +48,7 @@ class Login extends React.Component<LoginProps, LoginState>{
             <div>
                 <div className="row justify-content-center">
                     <div className="col-md-6">
+                        <h3 className='text-center'>Login Page</h3>
                         <form className="form-group">
                             <label>Email:</label>
                             <input
@@ -61,12 +65,10 @@ class Login extends React.Component<LoginProps, LoginState>{
                                 value={this.state.name}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => { this.setState({ name: e.target.value }) }}
                                 type="text" className="form-control" />
-                            <label>Category Id:</label>
                         </form>
                         <button
                             onClick={this.handleSubmit}
                         >Login</button>
-
                     </div>
                 </div>
             </div>

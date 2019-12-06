@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { json } from '../utils/api';
+import { json, User } from '../utils/api';
 import { RouteComponentProps } from 'react-router';
+
 
 class EditBook extends React.Component<EditBookProps, EditBookState>{
     constructor(props: EditBookProps) {
@@ -17,16 +18,21 @@ class EditBook extends React.Component<EditBookProps, EditBookState>{
     }
 
     async componentDidMount() {
-        try {
-            let book = await json(`/api/books/${this.props.match.params.id}`)
-            this.setState({
-                title: book.title,
-                author: book.author,
-                price: book.price,
-                categoryid: book.categoryid
-            })
-        } catch (e) {
-            console.log(e)
+        if (!User || User.userid === null || User.role !== 'admin') {
+            alert('you must login or register to edit')
+            this.props.history.replace('/login')
+        } else {
+            try {
+                let book = await json(`/api/books/${this.props.match.params.id}`)
+                this.setState({
+                    title: book.title,
+                    author: book.author,
+                    price: book.price,
+                    categoryid: book.categoryid
+                })
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 
@@ -61,6 +67,8 @@ class EditBook extends React.Component<EditBookProps, EditBookState>{
             <div>
                 <div className="row justify-content-center">
                     <div className="col-md-6">
+                    <h3 className='text-center'>Edit Book Page</h3>
+
                         <form className="form-group">
                             <label>Title:</label>
                             <input

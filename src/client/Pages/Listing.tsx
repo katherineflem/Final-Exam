@@ -26,6 +26,8 @@ class Listing extends React.Component<IListingProps, IListingState> {
             <main className="container my-5">
                 <div className="row">
                     <div className="col">
+                    <h3 className='text-center'>Book Listing Page</h3>
+
                         {this.state.books.map(book=>{
                             return(
                                 <div className="card m-2 shadow" key={book.id}>

@@ -6,6 +6,7 @@ import Details from './Pages/Details'
 import EditBook from './Pages/EditBook';
 import AddBook from './Pages/AddBook';
 import Login from './Pages/Login';
+import Register from './Pages/Register';
 
 class App extends React.Component<AppProps, AppState>{
     constructor(props: AppProps) {
@@ -25,6 +26,8 @@ class App extends React.Component<AppProps, AppState>{
                     <Route exact path='/edit/:id' component={EditBook}></Route>
                     <Route exact path='/new' component={AddBook}></Route>
                     <Route exact path='/login' component={Login}></Route>
+                    <Route exact path='/register' component={Register}></Route>
+
 
 
                 </Switch>
