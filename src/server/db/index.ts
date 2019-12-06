@@ -1,5 +1,6 @@
-import mysql from 'mysql'
+import * as mysql from 'mysql'
 import config from '../config'
+import Books from './queries/books'
 
 
 export const pool = mysql.createPool(config.mysql)
@@ -14,4 +15,8 @@ export const Query = (query: string, values?: any) => {
             }
         })
     })
+}
+
+export default{
+    Books
 }
