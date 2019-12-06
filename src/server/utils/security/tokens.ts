@@ -1,7 +1,7 @@
 import * as crypto from 'crypto'
 import * as jwt from 'jsonwebtoken'
-// import db from '../../db'
-// import config from '../../config'
+import db from '../../db'
+import config from '../../config'
 
 //INSERTING OUR USER INTO OUR TOKENS TABLE(USING FK USERID)
 //GENERATE A KEY AND UPDATE THE NEW USER ROW WITH THE KEY
@@ -17,12 +17,12 @@ import * as jwt from 'jsonwebtoken'
 
 
 export const CreateToken = async (payload: IPayload) => {
-    let {insertId}: any = await db.Tokens.insertToken(payload.userid); //inserted row in the tokens table, these are auto-incrementing
+    let {insertId}: any = await db.Tokens.insert(payload.userid); //inserted row in the tokens table, these are auto-incrementing
     payload.accesstokenid = insertId;// insertId is the default mysql response for what was just inserted
     payload.unique = crypto.randomBytes(32).toString('hex');//hex is a type of code like the color codes
     let token = await jwt.sign(payload, config.auth.secret)
     console.log(token)
-    await db.Tokens.updateRow(token, payload.accesstokenid);
+    await db.Tokens.update(payload.accesstokenid, token);
     return token;
 };
 

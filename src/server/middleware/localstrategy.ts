@@ -22,7 +22,7 @@ passport.use(new LocalStrategy.Strategy({
     async (email, password, done) => {
         try {
             //find a user by their email (req.bode.email) they provided
-            let [user]: any = await db.Users.findOneByEmail(email);
+            let [user]: any = await db.Users.findbyEmail(email);
             //if there is a user AND their password they typed, is the same as their hashed user.password in the db...
             if (user && ComparePassword(password, user.password)) {
                 delete user.password;//wont send password in response

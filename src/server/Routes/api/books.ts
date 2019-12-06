@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import db from '../../db'
+import {isAdmin} from '../../middleware/authCheckpoints'
 
 const router = Router();
 
@@ -25,7 +26,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', isAdmin,async (req, res) => {
     try {
         let title = req.body.title
         let author = req.body.author
@@ -39,7 +40,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', isAdmin, async (req, res) => {
     try {
         let title = req.body.title
         let id = req.params.id
@@ -54,7 +55,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', isAdmin, async (req, res) => {
     try {
         let id = req.params.id
         let book = await db.Books.deleteBook(id)
