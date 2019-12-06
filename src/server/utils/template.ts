@@ -11,7 +11,7 @@ router.get('/test', async (req, res)=>{
 
     }catch(e){
         console.log(e);
-        res.status(500).json("NOPE")
+        res.sendStatus(500).json("NOPE")
     }
 })
 
